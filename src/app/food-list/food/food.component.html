@@ -1,0 +1,17 @@
+<div class="row" data-toggle="collapse" [attr.data-target]="'#'+food.name" style="cursor: pointer;">
+    <span class="col-xs-6">
+        <img src="{{food.imgPath}}" alt="{{food.name}}" class="img-responsive"
+            style="max-height: 50px; padding-right: 10px ;">
+    </span>
+    <div class="col-xs-6 text-dark">
+        <div>{{food.name}}</div>
+        <div [id]="food.name" class="collapse">
+            <div>
+                Ingredients: {{food.ingredients}}
+            </div>
+            <div>
+                Procedure: {{food.procedure}}
+            </div>
+        </div>
+    </div>
+</div>
