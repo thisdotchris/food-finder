@@ -1,63 +1,45 @@
 import { Injectable } from '@angular/core';
 import { Ingredient } from '../models/ingredient.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class IngredientsService {
+  private apiUrl = 'http://localhost:3000/v1';
+  public ingredients: Ingredient[];
 
-  public ingredients: Ingredient[] = [
-    {
-      id: 1,
-      name: 'ing1',
-      imgPath: 'https://californiaoliveranch.com/wp-content/uploads/2019/02/COR-5IngredientMeals-021319_096.jpg',
-      selected: false
-    },
-    {
-      id: 2,
-      name: 'my2',
-      imgPath: 'https://californiaoliveranch.com/wp-content/uploads/2019/02/COR-5IngredientMeals-021319_096.jpg',
-      selected: false
-    },
-    {
-      id: 3,
-      name: 'ing2',
-      imgPath: 'https://californiaoliveranch.com/wp-content/uploads/2019/02/COR-5IngredientMeals-021319_096.jpg',
-      selected: false
-    },
-    {
-      id: 4,
-      name: 'ing3',
-      imgPath: 'https://californiaoliveranch.com/wp-content/uploads/2019/02/COR-5IngredientMeals-021319_096.jpg',
-      selected: false
-    },
-    {
-      id: 5,
-      name: 'my3',
-      imgPath: 'https://californiaoliveranch.com/wp-content/uploads/2019/02/COR-5IngredientMeals-021319_096.jpg',
-      selected: false
-    },
-    {
-      id: 6,
-      name: 'tr3',
-      imgPath: 'https://californiaoliveranch.com/wp-content/uploads/2019/02/COR-5IngredientMeals-021319_096.jpg',
-      selected: false
-    }
-  ];
-
-  constructor() {
+  private httpGetIngredients() {
+    return this.http.get(`${this.apiUrl}/ingredients`);
   }
 
-  getIngredients(): Ingredient[] {
-    return this.ingredients;
+  constructor(private http: HttpClient) {
+    this.httpGetIngredients().subscribe((res: Ingredient[]) => {
+      this.ingredients = res;
+    });
+  }
+
+  getIngredients() {
+    return this.httpGetIngredients();
   }
 
   getIngredient(name: string) {
-    return this.ingredients.filter((ing) => {
+    return <Ingredient[]>this.ingredients.filter((ing) => {
       if (ing.name.toLowerCase().indexOf(name.toLowerCase()) > -1) {
         return ing;
       }
-    })
+    });
   }
 
+  addIngredients(form: FormData) {
+    return this.http.post(`${this.apiUrl}/ingredients`, form);
+  }
+
+  updateIngredients(form: FormData) {
+    return this.http.put(`${this.apiUrl}/ingredients`, form);
+  }
+
+  deleteIngredients(_id) {
+    return this.http.delete(`${this.apiUrl}/ingredients/${_id}`);
+  }
 }

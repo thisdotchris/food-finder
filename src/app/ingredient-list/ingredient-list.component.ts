@@ -6,24 +6,25 @@ import { AppEventEmitterService } from '../services/app-event-emitter.service';
 @Component({
   selector: 'app-ingredient-list',
   templateUrl: './ingredient-list.component.html',
-  styleUrls: ['./ingredient-list.component.css']
+  styleUrls: ['./ingredient-list.component.css'],
 })
 export class IngredientListComponent implements OnInit {
-
   public ingredients: Ingredient[];
   private ingredientService: IngredientsService;
 
-  constructor(ingredientService: IngredientsService, private messageService: AppEventEmitterService) {
+  constructor(
+    ingredientService: IngredientsService,
+    private messageService: AppEventEmitterService
+  ) {
     this.ingredientService = ingredientService;
-    this.ingredients = ingredientService.getIngredients();
+    // this.ingredients = ingredientService.getIngredients();
   }
 
   select(id: number, status: boolean) {
-    this.ingredients.map(ing => {
-      if (ing.id == id)
-        ing.selected = status
+    this.ingredients.map((ing) => {
+      if (ing.id == id) ing.selected = status;
       return ing;
-    })
+    });
   }
 
   onSearch(event: any) {
@@ -31,14 +32,17 @@ export class IngredientListComponent implements OnInit {
   }
 
   generate() {
-    const selectedIngredients = this.ingredients.filter(i => i.selected === true);
+    const selectedIngredients = this.ingredients.filter(
+      (i) => i.selected === true
+    );
     if (selectedIngredients.length === 0)
       alert('no ingredients selected. please select ingredients');
-    else
-      this.messageService.sendMessage(selectedIngredients);
+    else this.messageService.sendMessage(selectedIngredients);
   }
 
   ngOnInit(): void {
+    this.ingredientService.getIngredients().subscribe((data: Ingredient[]) => {
+      this.ingredients = data;
+    });
   }
-
 }

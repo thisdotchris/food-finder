@@ -2,17 +2,16 @@
 <h4>Foods</h4>
 <!-- search -->
 <div class="row" style="padding-left: 10px;">
-    <div class="col-xs-3" style="padding: 5px;"><label> Search: </label></div>
-    <div class="col-xs-3" style="padding: 5px;">
-        <div class="form-group">
-            <input type="text" class="form-control" (input)="onSearch($event)">
-        </div>
+  <div class="col-xs-3" style="padding: 5px;"><label> Search: </label></div>
+  <div class="col-xs-3" style="padding: 5px;">
+    <div class="form-group">
+      <input type="text" class="form-control" (input)="onSearch($event)" />
     </div>
+  </div>
 </div>
 <!-- food list -->
-<div style="height: 60%;
-overflow: scroll;">
-    <div class="list-group-item clearfix" *ngFor="let food of foods">
-        <app-food [food]=food></app-food>
-    </div>
+<div style="height: 70%; overflow: scroll;">
+  <div class="list-group-item clearfix" *ngFor="let food of foods">
+    <app-food [food]="food"></app-food>
+  </div>
 </div>

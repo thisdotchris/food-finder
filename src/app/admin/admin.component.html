@@ -1,134 +1,157 @@
-<base href="/admin">
-<hr>
+<base href="/admin" />
+<hr />
 <!-- Button to Open the Modal -->
-<button type="button" class="btn btn-primary" style="margin: 5px;" data-toggle="modal" data-target="#ingredient">
-    Add Ingredient
-</button>
 
-<button type="button" class="btn btn-primary" style="margin: 5px;" data-toggle="modal" data-target="#food">
-    Add Food
+<button
+  type="button"
+  class="btn btn-success"
+  style="margin: 5px;"
+  data-toggle="modal"
+  data-target="#ingredient"
+>
+  Add Ingredient
 </button>
 
 <!-- Ingredient Modal -->
 <div class="modal" id="ingredient">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <!-- Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Adding Ingredient</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- body -->
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="usr">Name:</label>
-                    <input type="text" class="form-control" id="usr">
-
-                    <p>Default file:</p>
-                    <input type="file" id="myFile" name="filename2">
-
-                    <div class="mt-3">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-
-        </div>
-    </div>
+  <app-ingredient-form
+    [fTitle]="addIngredient"
+    [isAdding]="isAdding"
+    (ingredientEventEmitter)="getIngredients()"
+  ></app-ingredient-form>
 </div>
 
-<!-- Food Modal -->
-<div class="modal" id="food">
-    <div class="modal-dialog">
-        <div class="modal-content">
+<app-food-form></app-food-form>
 
-            <!-- Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Adding Food</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- body -->
-            <div class="modal-body">
-                food body..
-            </div>
-
-            <!-- footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-
-        </div>
-    </div>
-</div>
+<hr />
 
 <!-- tables -->
 <div class="row">
-    <div class="col-md-6">
-        <h4>Ingredient</h4>
-        <hr>
-        <table class="table table-sm table-hover">
-            <thead>
-                <tr>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>john@example.com</td>
-                </tr>
-                <tr>
-                    <td>Mary</td>
-                    <td>Moe</td>
-                    <td>mary@example.com</td>
-                </tr>
-                <tr>
-                    <td>July</td>
-                    <td>Dooley</td>
-                    <td>july@example.com</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-6">
-        <h4>Food</h4>
-        <hr>
-        <table class="table table-sm table-hover">
-            <thead>
-                <tr>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>john@example.com</td>
-                </tr>
-                <tr>
-                    <td>Mary</td>
-                    <td>Moe</td>
-                    <td>mary@example.com</td>
-                </tr>
-                <tr>
-                    <td>July</td>
-                    <td>Dooley</td>
-                    <td>july@example.com</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+  <div class="col-md-6" style="height: 40%; overflow: scroll;">
+    <h4>Ingredient</h4>
+    <table class="table table-sm table-hover">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <!-- looping -->
+      <tbody
+        *ngFor="let ingredient of ingredients; let idx = index"
+        [attr.data-index]="idx"
+      >
+        <tr>
+          <td>
+            <img
+              src="{{ ingredient.imgPath }}"
+              alt="{{ ingredient.name }}"
+              class="img-responsive rounded-circle"
+              style="max-height: 50px; max-width: 50px;"
+            />
+          </td>
+          <td>{{ ingredient.name }}</td>
+          <td>
+            <!-- edit Ingredient form Modal -->
+            <div class="modal" id="id-{{ idx }}">
+              <app-ingredient-form
+                [isEditing]="isEditing"
+                [fTitle]="editIngredient"
+                [name]="ingredient.name"
+                [_id]="ingredient._id"
+                [imgPath]="ingredient.imgPath"
+                (ingredientEventEmitter)="getIngredients()"
+              ></app-ingredient-form>
+            </div>
+            <!-- edit action button -->
+            <button
+              type="button"
+              class="btn btn-sm btn-warning"
+              style="margin: 5px;"
+              data-toggle="modal"
+              [attr.data-target]="'#' + 'id-' + idx"
+            >
+              Edit
+            </button>
+            <!-- delete action button -->
+            <button
+              type="button"
+              class="btn btn-sm btn-danger"
+              data-toggle="modal"
+              [attr.data-target]="'#' + 'id-del-' + idx"
+            >
+              Delete
+            </button>
+            <!-- delete Modal -->
+            <div class="modal" [attr.id]="'id-del-' + idx">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <!-- Header -->
+                  <div class="modal-header">
+                    <h4 class="modal-title">Delete Ingredient</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                      &times;
+                    </button>
+                  </div>
+                  <!-- body -->
+                  <div class="modal-body">
+                    Do you want to delete ingredient {{ ingredient.name }}
+                  </div>
+                  <!-- footer -->
+                  <div class="modal-footer">
+                    <button
+                      class="btn btn-warning"
+                      (click)="deleteIngredient(ingredient._id)"
+                      data-dismiss="modal"
+                    >
+                      Submit
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Food Table -->
+  <div class="col-md-6">
+    <h4>Food</h4>
+    <table class="table table-sm table-hover">
+      <thead>
+        <tr>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John</td>
+          <td>Doe</td>
+          <td>john@example.com</td>
+        </tr>
+        <tr>
+          <td>Mary</td>
+          <td>Moe</td>
+          <td>mary@example.com</td>
+        </tr>
+        <tr>
+          <td>July</td>
+          <td>Dooley</td>
+          <td>july@example.com</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
