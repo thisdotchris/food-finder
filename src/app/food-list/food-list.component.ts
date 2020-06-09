@@ -6,22 +6,24 @@ import { AppEventEmitterService } from '../services/app-event-emitter.service';
 @Component({
   selector: 'app-food-list',
   templateUrl: './food-list.component.html',
-  styleUrls: ['./food-list.component.css']
+  styleUrls: ['./food-list.component.css'],
 })
 export class FoodListComponent implements OnInit {
-
   public foods: Food[];
   private foodService: FoodsService;
 
-  constructor(foodService: FoodsService, private messageService: AppEventEmitterService) {
-    this.foods = foodService.getFoods();
-    this.foodService = foodService;
-  }
+  constructor(
+    foodService: FoodsService,
+    private messageService: AppEventEmitterService
+  ) {}
 
   ngOnInit(): void {
-    this.messageService.message$.subscribe((message: any) => {
-      console.log(message)
-    })
+    // this.messageService.message$.subscribe((message: any) => {
+    //   console.log(message);
+    // });
+    this.foodService.getFoods().subscribe((res: Food[]) => {
+      this.foods = res;
+    });
   }
 
   onSearch(event: any) {
@@ -29,7 +31,6 @@ export class FoodListComponent implements OnInit {
   }
 
   generateFood(data: any) {
-    console.log(data)
+    console.log(data);
   }
-
 }

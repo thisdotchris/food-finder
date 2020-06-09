@@ -17,6 +17,9 @@ export class AdminComponent implements OnInit {
   public addIngredient: string = 'Add Ingredient';
   public editIngredient: string = 'Edit Ingredient';
 
+  public addFood: string = 'Add Food';
+  public editFood: string = 'Edit Food';
+
   public isAdding: boolean = true;
   public isEditing: boolean = true;
 
@@ -28,11 +31,18 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.getIngredients();
+    this.getFoods();
   }
 
   getIngredients() {
     this.ingredientsService.getIngredients().subscribe((res: Ingredient[]) => {
       this.ingredients = res;
+    });
+  }
+
+  getFoods() {
+    this.foodService.getFoods().subscribe((res: Food[]) => {
+      this.foods = res;
     });
   }
 

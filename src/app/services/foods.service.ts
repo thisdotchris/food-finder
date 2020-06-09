@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Food } from '../models/food.model';
 
@@ -5,53 +6,21 @@ import { Food } from '../models/food.model';
   providedIn: 'root',
 })
 export class FoodsService {
-  public foods: Food[] = [
-    {
-      id: 1,
-      name: 'food1',
-      ingredients: ['ing1', 'ing2', 'ing3'],
-      procedure: 'food1 procedure',
-      imgPath:
-        'https://sf.mariefranceasia.com/wp-content/uploads/sites/7/2013/07/fish-food-dish1.jpg',
-    },
-    {
-      id: 2,
-      name: 'food2',
-      ingredients: ['my1', 'my2'],
-      procedure: 'food1 procedure',
-      imgPath:
-        'https://sf.mariefranceasia.com/wp-content/uploads/sites/7/2013/07/fish-food-dish1.jpg',
-    },
-    {
-      id: 3,
-      name: 'food3',
-      ingredients: ['ing1', 'ing2', 'ing3', 'ing4', 'ing5'],
-      procedure: 'food2 procedure',
-      imgPath:
-        'https://sf.mariefranceasia.com/wp-content/uploads/sites/7/2013/07/fish-food-dish1.jpg',
-    },
-    {
-      id: 4,
-      name: 'food4',
-      ingredients: ['ing1', 'ing2', 'ing3', 'ing4', 'ing5'],
-      procedure: 'food2 procedure',
-      imgPath:
-        'https://sf.mariefranceasia.com/wp-content/uploads/sites/7/2013/07/fish-food-dish1.jpg',
-    },
-    {
-      id: 5,
-      name: 'food5',
-      ingredients: ['ing1', 'ing2', 'ing3', 'ing4', 'ing5'],
-      procedure: 'food2 procedure',
-      imgPath:
-        'https://sf.mariefranceasia.com/wp-content/uploads/sites/7/2013/07/fish-food-dish1.jpg',
-    },
-  ];
+  private apiUrl = 'http://localhost:3000/v1';
+  public foods: Food[];
 
-  constructor() {}
+  private httpGetFoods() {
+    return this.http.get(`${this.apiUrl}/foods`);
+  }
 
-  getFoods(): Food[] {
-    return this.foods;
+  constructor(private http: HttpClient) {
+    this.httpGetFoods().subscribe((res: [Food]) => {
+      this.foods = res;
+    });
+  }
+
+  getFoods() {
+    return this.httpGetFoods();
   }
 
   getFood(name: string) {
@@ -60,5 +29,17 @@ export class FoodsService {
         return f;
       }
     });
+  }
+
+  addFoods(form: FormData) {
+    return this.http.post(`${this.apiUrl}/foods`, form);
+  }
+
+  editFoods(form: FormData) {
+    return this.http.put(`${this.apiUrl}/foods`, form);
+  }
+
+  deleteFood(_id) {
+    return this.http.delete(`${this.apiUrl}/foods/${_id}`);
   }
 }

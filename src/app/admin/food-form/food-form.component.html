@@ -1,82 +1,87 @@
-<button
-  type="button"
-  class="btn btn-success"
-  style="margin: 5px;"
-  data-toggle="modal"
-  data-target="#ingredient"
->
-  Add Ingredient
-</button>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <!-- Header -->
+    <div class="modal-header">
+      <h4 class="modal-title">{{ fTitle }}</h4>
+      <button type="button" class="close" data-dismiss="modal">
+        &times;
+      </button>
+    </div>
 
-<!-- Ingredient Modal -->
-<div class="modal" id="ingredient">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Adding Ingredient</h4>
-        <button type="button" class="close" data-dismiss="modal">
-          &times;
-        </button>
-      </div>
-
-      <!-- body -->
-      <div class="modal-body">
-        <!-- <form action="/action_page.php"> -->
-        <!-- <form (ngSubmit)="addIngredient(f)" #f="ngForm">
-            <div class="form-group">
-              <label for="name">Name:</label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Enter name"
-                id="name"
-                name="name"
-                ngModel
-              />
-            </div>
-  
-            <p>Image file:</p>
-            <input type="file" id="myFile" name="img" ngModel />
-  
-            <div class="mt-3">
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </form> -->
-        <div class="form-group">
-          <label for="name">Name:</label>
-          <input
-            type="text"
-            class="form-group"
-            [(ngModel)]="name"
-            placeholder="Enter Name..."
-            name="name"
-          />
-          <p>Image file:</p>
-          <input
-            type="file"
-            class="form-group"
-            (change)="addSelectedFile($event)"
-            name="file"
-          />
-          <div class="mt-3">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              (click)="addIngredient()"
-            >
-              Submit
-            </button>
+    <!-- body -->
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="file">Image:</label>
+        <input
+          type="file"
+          class="form-control"
+          (change)="addSelectedFile($event)"
+          name="file"
+        />
+        <label for="name">Name:</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="name"
+          placeholder="Enter Name..."
+          name="name"
+        />
+        <label for="ingredients">Ingredients:</label>
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Search.."
+          (input)="searchIngredient($event)"
+          [(ngModel)]="currentSearch"
+        />
+        <div *ngFor="let s of searchResult">
+          <div style="cursor: pointer;" (click)="addIngredient(s)">
+            {{ s.name }}
           </div>
         </div>
-      </div>
+        <div
+          class="form-control"
+          name="ingredients"
+          style="overflow: auto; height: 150px; max-height: 140px;"
+        >
+          <div *ngFor="let ing of ingredients">
+            <div class="clearfix text-sm hr">
+              <span class="float-left">{{ ing.name }}</span>
+              <span
+                class="float-right text-danger"
+                style="cursor: pointer; margin: 5px;"
+                (click)="removeIngredient(ing)"
+                >x</span
+              >
+              >
+            </div>
+          </div>
+        </div>
 
-      <!-- footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">
-          Close
-        </button>
+        <!-- <input type="text" class="form-control" name="ingrdients" /> -->
+        <label for="procedure">Procedure:</label>
+        <textarea
+          class="form-control"
+          rows="5"
+          name="procedure"
+          [(ngModel)]="procedure"
+        ></textarea>
       </div>
+    </div>
+
+    <!-- footer -->
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="submit()"
+        data-dismiss="modal"
+      >
+        Submit
+      </button>
+      <button type="button" class="btn btn-danger" data-dismiss="modal">
+        Close
+      </button>
     </div>
   </div>
 </div>

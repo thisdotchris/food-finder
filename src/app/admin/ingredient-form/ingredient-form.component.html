@@ -26,21 +26,19 @@
           (change)="addSelectedFile($event)"
           name="file"
         />
-        <div class="mt-3">
-          <button
-            type="submit"
-            class="btn btn-primary"
-            (click)="submit()"
-            data-dismiss="modal"
-          >
-            Submit
-          </button>
-        </div>
       </div>
     </div>
 
     <!-- footer -->
     <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="submit()"
+        data-dismiss="modal"
+      >
+        Submit
+      </button>
       <button type="button" class="btn btn-danger" data-dismiss="modal">
         Close
       </button>

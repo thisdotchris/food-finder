@@ -1,7 +1,7 @@
 <base href="/admin" />
 <hr />
 <!-- Button to Open the Modal -->
-
+<!-- Add Ingredient Button -->
 <button
   type="button"
   class="btn btn-success"
@@ -10,6 +10,16 @@
   data-target="#ingredient"
 >
   Add Ingredient
+</button>
+<!-- Add Food Button -->
+<button
+  type="button"
+  class="btn btn-success"
+  style="margin: 5px;"
+  data-toggle="modal"
+  data-target="#food"
+>
+  Add Food
 </button>
 
 <!-- Ingredient Modal -->
@@ -21,7 +31,10 @@
   ></app-ingredient-form>
 </div>
 
-<app-food-form></app-food-form>
+<!-- Food Modal -->
+<div class="modal" id="food">
+  <app-food-form [fTitle]="addFood" [isAdding]="isAdding"></app-food-form>
+</div>
 
 <hr />
 
@@ -127,29 +140,79 @@
   <!-- Food Table -->
   <div class="col-md-6">
     <h4>Food</h4>
-    <table class="table table-sm table-hover">
+    <table class="table table-sm">
       <thead>
         <tr>
-          <th>Firstname</th>
-          <th>Lastname</th>
-          <th>Email</th>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Ingredients</th>
+          <th>Procedure</th>
+          <th>Action</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody
+        *ngFor="let food of foods; let idx = index"
+        [attr.data-index]="idx"
+      >
         <tr>
-          <td>John</td>
-          <td>Doe</td>
-          <td>john@example.com</td>
-        </tr>
-        <tr>
-          <td>Mary</td>
-          <td>Moe</td>
-          <td>mary@example.com</td>
-        </tr>
-        <tr>
-          <td>July</td>
-          <td>Dooley</td>
-          <td>july@example.com</td>
+          <td>
+            <img
+              src="{{ food.imgPath }}"
+              alt="{{ food.name }}"
+              class="img-responsive rounded-circle"
+              style="max-height: 50px; max-width: 50px;"
+            />
+          </td>
+          <td>{{ food.name }}</td>
+          <td>
+            <div
+              *ngFor="let ing of food.ingredients; let idx = index"
+              [attr.data-index]="idx"
+            >
+              <div class="clearfix">
+                <span class="float-left small">{{ ing.name }}</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div
+              style="
+                width: 10em;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+              "
+            >
+              {{ food.procedure }}
+            </div>
+          </td>
+          <td>
+            <!-- edit food form Modal -->
+            <div class="modal" id="id-f-{{ idx }}">
+              <app-food-form
+                [isEditing]="isEditing"
+                [fTitle]="editFood"
+                [name]="food.name"
+                [_id]="food._id"
+                [imgPath]="food.imgPath"
+                [ingredients]="food.ingredients"
+                [procedure]="food.procedure"
+              ></app-food-form>
+            </div>
+            <!-- edit action button -->
+            <button
+              type="button"
+              class="btn btn-sm btn-warning"
+              style="margin: 5px;"
+              data-toggle="modal"
+              [attr.data-target]="'#' + 'id-f-' + idx"
+            >
+              Edit
+            </button>
+            <button class="btn btn-sm btn-danger">
+              Delete
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
