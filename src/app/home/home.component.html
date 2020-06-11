@@ -1,9 +1,37 @@
-<hr>
-<div class="row">
-    <div class="col-md-6">
-        <app-ingredient-list></app-ingredient-list>
+<hr />
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <app-ingredient-list
+        (eventEmitter)="selectIngredient($event)"
+      ></app-ingredient-list>
+      <div class="row">
+        <div
+          class="col-sm-4"
+          *ngFor="let ingredient of selectedIngredients; let idx = index"
+          [attr.data-index]="idx"
+        >
+          <div class="badge badge-pill badge-success">
+            <span
+              class="float-left"
+              style="
+                text-overflow: ellipsis;
+                width: 7em;
+                overflow: hidden;
+                white-space: nowrap;
+                cursor: pointer;
+              "
+              data-toggle="tooltip"
+              title="Remove?"
+              (click)="removeSelectedIngredient(idx)"
+              >{{ ingredient.name }}</span
+            >
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-md-6">
-        <app-food-list></app-food-list>
+    <div class="col-md-9">
+      <app-food-list></app-food-list>
     </div>
+  </div>
 </div>

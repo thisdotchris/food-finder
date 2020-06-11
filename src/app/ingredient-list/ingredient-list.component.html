@@ -1,39 +1,24 @@
 <!-- title -->
-<h4>Ingredients</h4>
-<!-- search -->
-<div class="row" style="padding-left: 10px;">
-  <div class="col-xs-2" style="padding: 5px;"><label> Search: </label></div>
-  <div class="col-xs-2" style="padding: 5px;">
-    <div class="form-group">
-      <input type="text" class="form-control" (input)="onSearch($event)" />
+<!-- <h4>Ingredients</h4> -->
+<form>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Search</span>
     </div>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Ingredient"
+      (input)="onSearch($event)"
+    />
   </div>
-  <div class="col-xs-2" style="padding: 5px;">
-    <button class="btn btn-success" (click)="generate()">Generate Food</button>
-  </div>
-</div>
-<!-- list of ingredients -->
-<div style="height: 70%; overflow: scroll;">
-  <div class="list-group-item clearfix" *ngFor="let ingredient of ingredients">
-    <div
-      class="row"
-      [ngStyle]="{ backgroundColor: ingredient.selected ? 'green' : 'white' }"
-    >
-      <!-- checkbox -->
-      <div class="col-xs-1 form-check">
-        <label class="form-check-label">
-          <input
-            type="checkbox"
-            class="form-check-input"
-            [checked]="ingredient.selected"
-            (change)="select(ingredient.id, $event.target.checked)"
-          />
-        </label>
-      </div>
-      <!-- name -->
-      <div class="col-xs-1">
-        <app-ingredient [ingredient]="ingredient"></app-ingredient>
-      </div>
+</form>
+
+<div>
+  <div *ngFor="let ingredient of searchResult">
+    <div class="hv" (click)="addToSelectedIngredients(ingredient)">
+      <app-ingredient [ingredient]="ingredient"></app-ingredient>
+      <hr />
     </div>
   </div>
 </div>

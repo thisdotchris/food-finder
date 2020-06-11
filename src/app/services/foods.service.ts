@@ -19,6 +19,12 @@ export class FoodsService {
     });
   }
 
+  generateFoods(ingredientsIds) {
+    return this.http.post(`${this.apiUrl}/foods/generate`, {
+      ids: ingredientsIds,
+    });
+  }
+
   getFoods() {
     return this.httpGetFoods();
   }

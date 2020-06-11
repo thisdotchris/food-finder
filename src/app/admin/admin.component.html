@@ -1,220 +1,269 @@
 <base href="/admin" />
-<hr />
-<!-- Button to Open the Modal -->
-<!-- Add Ingredient Button -->
-<button
-  type="button"
-  class="btn btn-success"
-  style="margin: 5px;"
-  data-toggle="modal"
-  data-target="#ingredient"
->
-  Add Ingredient
-</button>
-<!-- Add Food Button -->
-<button
-  type="button"
-  class="btn btn-success"
-  style="margin: 5px;"
-  data-toggle="modal"
-  data-target="#food"
->
-  Add Food
-</button>
+<div class="container">
+  <hr />
+  <!-- Button to Open the Modal -->
+  <!-- Add Ingredient Button -->
+  <button
+    type="button"
+    class="btn btn-success"
+    style="margin: 5px;"
+    data-toggle="modal"
+    data-target="#ingredient"
+  >
+    Add Ingredient
+  </button>
+  <!-- Add Food Button -->
+  <button
+    type="button"
+    class="btn btn-success"
+    style="margin: 5px;"
+    data-toggle="modal"
+    data-target="#food"
+  >
+    Add Food
+  </button>
 
-<!-- Ingredient Modal -->
-<div class="modal" id="ingredient">
-  <app-ingredient-form
-    [fTitle]="addIngredient"
-    [isAdding]="isAdding"
-    (ingredientEventEmitter)="getIngredients()"
-  ></app-ingredient-form>
-</div>
+  <!-- Ingredient Modal -->
+  <div class="modal" id="ingredient">
+    <app-ingredient-form
+      [fTitle]="addIngredient"
+      [isAdding]="isAdding"
+      (ingredientEventEmitter)="getIngredients()"
+    ></app-ingredient-form>
+  </div>
 
-<!-- Food Modal -->
-<div class="modal" id="food">
-  <app-food-form [fTitle]="addFood" [isAdding]="isAdding"></app-food-form>
-</div>
+  <!-- Food Modal -->
+  <div class="modal" id="food">
+    <app-food-form
+      [fTitle]="addFood"
+      [isAdding]="isAdding"
+      (foodsEventEmitter)="getFoods()"
+    ></app-food-form>
+  </div>
 
-<hr />
+  <hr />
 
-<!-- tables -->
-<div class="row">
-  <div class="col-md-6" style="height: 40%; overflow: scroll;">
-    <h4>Ingredient</h4>
-    <table class="table table-sm table-hover">
-      <thead>
-        <tr>
-          <th>Image</th>
-          <th>Name</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <!-- looping -->
-      <tbody
-        *ngFor="let ingredient of ingredients; let idx = index"
-        [attr.data-index]="idx"
-      >
-        <tr>
-          <td>
-            <img
-              src="{{ ingredient.imgPath }}"
-              alt="{{ ingredient.name }}"
-              class="img-responsive rounded-circle"
-              style="max-height: 50px; max-width: 50px;"
-            />
-          </td>
-          <td>{{ ingredient.name }}</td>
-          <td>
-            <!-- edit Ingredient form Modal -->
-            <div class="modal" id="id-{{ idx }}">
-              <app-ingredient-form
-                [isEditing]="isEditing"
-                [fTitle]="editIngredient"
-                [name]="ingredient.name"
-                [_id]="ingredient._id"
-                [imgPath]="ingredient.imgPath"
-                (ingredientEventEmitter)="getIngredients()"
-              ></app-ingredient-form>
-            </div>
-            <!-- edit action button -->
-            <button
-              type="button"
-              class="btn btn-sm btn-warning"
-              style="margin: 5px;"
-              data-toggle="modal"
-              [attr.data-target]="'#' + 'id-' + idx"
-            >
-              Edit
-            </button>
-            <!-- delete action button -->
-            <button
-              type="button"
-              class="btn btn-sm btn-danger"
-              data-toggle="modal"
-              [attr.data-target]="'#' + 'id-del-' + idx"
-            >
-              Delete
-            </button>
-            <!-- delete Modal -->
-            <div class="modal" [attr.id]="'id-del-' + idx">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <!-- Header -->
-                  <div class="modal-header">
-                    <h4 class="modal-title">Delete Ingredient</h4>
-                    <button type="button" class="close" data-dismiss="modal">
-                      &times;
-                    </button>
-                  </div>
-                  <!-- body -->
-                  <div class="modal-body">
-                    Do you want to delete ingredient {{ ingredient.name }}
-                  </div>
-                  <!-- footer -->
-                  <div class="modal-footer">
-                    <button
-                      class="btn btn-warning"
-                      (click)="deleteIngredient(ingredient._id)"
-                      data-dismiss="modal"
-                    >
-                      Submit
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-danger"
-                      data-dismiss="modal"
-                    >
-                      Close
-                    </button>
+  <!-- tables -->
+  <div class="row">
+    <div class="col-md-6" style="height: 40%; overflow: scroll;">
+      <h4>Ingredient</h4>
+      <table class="table table-sm table-hover">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <!-- looping -->
+        <tbody
+          *ngFor="let ingredient of ingredients; let idx = index"
+          [attr.data-index]="idx"
+        >
+          <tr>
+            <td>
+              <img
+                src="{{ ingredient.imgPath }}"
+                alt="{{ ingredient.name }}"
+                class="img-responsive rounded-circle"
+                style="max-height: 50px; max-width: 50px;"
+              />
+            </td>
+            <td>{{ ingredient.name }}</td>
+            <td>
+              <!-- edit Ingredient form Modal -->
+              <div class="modal" id="id-{{ idx }}">
+                <app-ingredient-form
+                  [isEditing]="isEditing"
+                  [fTitle]="editIngredient"
+                  [name]="ingredient.name"
+                  [_id]="ingredient._id"
+                  [imgPath]="ingredient.imgPath"
+                  (ingredientEventEmitter)="getIngredients()"
+                ></app-ingredient-form>
+              </div>
+              <!-- edit action button -->
+              <button
+                type="button"
+                class="btn btn-sm btn-warning"
+                style="margin: 5px;"
+                data-toggle="modal"
+                [attr.data-target]="'#' + 'id-' + idx"
+              >
+                Edit
+              </button>
+              <!-- delete action button -->
+              <button
+                type="button"
+                class="btn btn-sm btn-danger"
+                data-toggle="modal"
+                [attr.data-target]="'#' + 'id-del-' + idx"
+              >
+                Delete
+              </button>
+              <!-- delete Modal -->
+              <div class="modal" [attr.id]="'id-del-' + idx">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <!-- Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">Delete Ingredient</h4>
+                      <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                      </button>
+                    </div>
+                    <!-- body -->
+                    <div class="modal-body">
+                      Do you want to delete ingredient {{ ingredient.name }}
+                    </div>
+                    <!-- footer -->
+                    <div class="modal-footer">
+                      <button
+                        class="btn btn-warning"
+                        (click)="deleteIngredient(ingredient._id)"
+                        data-dismiss="modal"
+                      >
+                        Submit
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-  <!-- Food Table -->
-  <div class="col-md-6">
-    <h4>Food</h4>
-    <table class="table table-sm">
-      <thead>
-        <tr>
-          <th>Image</th>
-          <th>Name</th>
-          <th>Ingredients</th>
-          <th>Procedure</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody
-        *ngFor="let food of foods; let idx = index"
-        [attr.data-index]="idx"
-      >
-        <tr>
-          <td>
-            <img
-              src="{{ food.imgPath }}"
-              alt="{{ food.name }}"
-              class="img-responsive rounded-circle"
-              style="max-height: 50px; max-width: 50px;"
-            />
-          </td>
-          <td>{{ food.name }}</td>
-          <td>
-            <div
-              *ngFor="let ing of food.ingredients; let idx = index"
-              [attr.data-index]="idx"
-            >
-              <div class="clearfix">
-                <span class="float-left small">{{ ing.name }}</span>
+    <!-- Food Table -->
+    <div class="col-md-6">
+      <h4>Food</h4>
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Ingredients</th>
+            <th>Procedure</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody
+          *ngFor="let food of foods; let idx = index"
+          [attr.data-index]="idx"
+        >
+          <tr>
+            <td>
+              <img
+                src="{{ food.imgPath }}"
+                alt="{{ food.name }}"
+                class="img-responsive rounded-circle"
+                style="max-height: 50px; max-width: 50px;"
+              />
+            </td>
+            <td>{{ food.name }}</td>
+            <td>
+              <div
+                *ngFor="let ing of food.ingredients; let idx = index"
+                [attr.data-index]="idx"
+              >
+                <div class="clearfix">
+                  <span class="float-left small">{{ ing.name }}</span>
+                </div>
               </div>
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                width: 10em;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-              "
-            >
-              {{ food.procedure }}
-            </div>
-          </td>
-          <td>
-            <!-- edit food form Modal -->
-            <div class="modal" id="id-f-{{ idx }}">
-              <app-food-form
-                [isEditing]="isEditing"
-                [fTitle]="editFood"
-                [name]="food.name"
-                [_id]="food._id"
-                [imgPath]="food.imgPath"
-                [ingredients]="food.ingredients"
-                [procedure]="food.procedure"
-              ></app-food-form>
-            </div>
-            <!-- edit action button -->
-            <button
-              type="button"
-              class="btn btn-sm btn-warning"
-              style="margin: 5px;"
-              data-toggle="modal"
-              [attr.data-target]="'#' + 'id-f-' + idx"
-            >
-              Edit
-            </button>
-            <button class="btn btn-sm btn-danger">
-              Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            </td>
+            <td>
+              <div
+                style="
+                  width: 10em;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                "
+              >
+                {{ food.procedure }}
+              </div>
+            </td>
+            <td>
+              <!-- edit food form Modal -->
+              <div class="modal" id="id-f-{{ idx }}">
+                <app-food-form
+                  [isEditing]="isEditing"
+                  [fTitle]="editFood"
+                  [name]="food.name"
+                  [_id]="food._id"
+                  [imgPath]="food.imgPath"
+                  [ingredients]="food.ingredients"
+                  [procedure]="food.procedure"
+                  (foodsEventEmitter)="getFoods()"
+                ></app-food-form>
+              </div>
+              <!-- edit action button -->
+              <button
+                type="button"
+                class="btn btn-sm btn-warning"
+                style="margin: 5px;"
+                data-toggle="modal"
+                [attr.data-target]="'#' + 'id-f-' + idx"
+              >
+                Edit
+              </button>
+              <!-- delete action button -->
+              <button
+                type="button"
+                class="btn btn-sm btn-danger"
+                data-toggle="modal"
+                [attr.data-target]="'#' + 'id-f-del-' + idx"
+              >
+                Delete
+              </button>
+
+              <!-- delete Modal -->
+              <div class="modal" [attr.id]="'id-f-del-' + idx">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <!-- Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">Delete Foods</h4>
+                      <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                      </button>
+                    </div>
+                    <!-- body -->
+                    <div class="modal-body">
+                      Do you want to delete food {{ food.name }}
+                    </div>
+                    <!-- footer -->
+                    <div class="modal-footer">
+                      <button
+                        class="btn btn-warning"
+                        (click)="deleteFood(food._id)"
+                        data-dismiss="modal"
+                      >
+                        Submit
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

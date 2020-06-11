@@ -1,17 +1,26 @@
 <!-- title -->
-<h4>Foods</h4>
-<!-- search -->
-<div class="row" style="padding-left: 10px;">
-  <div class="col-xs-3" style="padding: 5px;"><label> Search: </label></div>
-  <div class="col-xs-3" style="padding: 5px;">
-    <div class="form-group">
-      <input type="text" class="form-control" (input)="onSearch($event)" />
+<!-- <h4>Foods</h4> -->
+<form>
+  <div class="input-group" style="width: 50%;">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Search</span>
     </div>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Food"
+      (input)="onSearch($event)"
+    />
   </div>
-</div>
-<!-- food list -->
-<div style="height: 70%; overflow: scroll;">
-  <div class="list-group-item clearfix" *ngFor="let food of foods">
-    <app-food [food]="food"></app-food>
+</form>
+<div class="container-fluid">
+  <div class="row">
+    <div
+      *ngFor="let food of foods; let idx = index"
+      [attr.data-index]="idx"
+      class="col-sm-3"
+    >
+      <app-food [food]="food" [colapseId]="idx"></app-food>
+    </div>
   </div>
 </div>

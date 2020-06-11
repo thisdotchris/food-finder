@@ -1,17 +1,26 @@
-<div class="row" data-toggle="collapse" [attr.data-target]="'#'+food.name" style="cursor: pointer;">
-    <span class="col-xs-6">
-        <img src="{{food.imgPath}}" alt="{{food.name}}" class="img-responsive"
-            style="max-height: 50px; padding-right: 10px ;">
-    </span>
-    <div class="col-xs-6 text-dark">
-        <div>{{food.name}}</div>
-        <div [id]="food.name" class="collapse">
-            <div>
-                Ingredients: {{food.ingredients}}
-            </div>
-            <div>
-                Procedure: {{food.procedure}}
-            </div>
-        </div>
+<div class="card" style="width: 100%; margin-top: 10px;">
+  <img
+    class="card-img-top"
+    src="{{ food.imgPath }}"
+    alt="Card image"
+    style="width: 100%;"
+  />
+  <div class="card-body">
+    <h4 class="card-title">{{ food.name }}</h4>
+    <div [id]="'id' + colapseId" class="collapse">
+      <div>Ingredients:</div>
+      <ul *ngFor="let i of food.ingredients">
+        <li>{{ i.name }}</li>
+      </ul>
+      <div>Procedure: {{ food.procedure }}</div>
     </div>
+    <h1></h1>
+    <button
+      class="btn btn-sm btn-success"
+      data-toggle="collapse"
+      [attr.data-target]="'#' + 'id' + colapseId"
+    >
+      See Info
+    </button>
+  </div>
 </div>

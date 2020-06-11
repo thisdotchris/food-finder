@@ -4,20 +4,13 @@ import { Food } from '../../models/food.model';
 @Component({
   selector: 'app-food',
   templateUrl: './food.component.html',
-  styleUrls: ['./food.component.css']
+  styleUrls: ['./food.component.css'],
 })
 export class FoodComponent implements OnInit {
-
+  @Input() colapseId: string = 'testid';
   @Input() food: Food;
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
-  generateFood(ingredient: any) {
-    console.log(ingredient)
-  }
-
+  ngOnInit(): void {}
 }

@@ -1,6 +1,5 @@
 import { IngredientsService } from './../services/ingredients.service';
 import { FoodsService } from './../services/foods.service';
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Food } from '../models/food.model';
 import { Ingredient } from '../models/ingredient.model';
@@ -24,7 +23,6 @@ export class AdminComponent implements OnInit {
   public isEditing: boolean = true;
 
   constructor(
-    private http: HttpClient,
     private foodService: FoodsService,
     private ingredientsService: IngredientsService
   ) {}
@@ -49,6 +47,12 @@ export class AdminComponent implements OnInit {
   deleteIngredient(_id) {
     this.ingredientsService.deleteIngredients(_id).subscribe((res) => {
       this.getIngredients();
+    });
+  }
+
+  deleteFood(_id) {
+    this.foodService.deleteFood(_id).subscribe((res) => {
+      this.getFoods();
     });
   }
 }

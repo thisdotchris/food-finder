@@ -11,11 +11,11 @@ import { FoodListComponent } from './food-list/food-list.component';
 import { FoodComponent } from './food-list/food/food.component';
 import { FoodsService } from './services/foods.service';
 import { IngredientsService } from './services/ingredients.service';
-import { AppEventEmitterService } from './services/app-event-emitter.service';
 import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from './home/home.component';
 import { IngredientFormComponent } from './admin/ingredient-form/ingredient-form.component';
 import { FoodFormComponent } from './admin/food-form/food-form.component';
+import { AppEventEmitterService } from './services/app-event-emitter.service';
 
 @NgModule({
   declarations: [

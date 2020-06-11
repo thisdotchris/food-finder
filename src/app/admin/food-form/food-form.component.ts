@@ -1,6 +1,7 @@
 import { Ingredient } from './../../models/ingredient.model';
 import { IngredientsService } from './../../services/ingredients.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FoodsService } from 'src/app/services/foods.service';
 
 @Component({
   selector: 'app-food-form',
@@ -12,19 +13,23 @@ export class FoodFormComponent implements OnInit {
   @Input() selectedFile: File;
   @Input() name: string;
   @Input() imgPath: string;
-  @Input() ingredients;
+  @Input() ingredients: any[] = [];
   @Input() procedure: string;
 
   @Input() fTitle: string = 'title';
   @Input() isAdding: boolean = false;
   @Input() isEditing: boolean = false;
+
   @Output() foodsEventEmitter = new EventEmitter();
 
   private ingredientList: Ingredient[];
   public searchResult: Ingredient[];
   public currentSearch: string;
 
-  constructor(private ingredientService: IngredientsService) {}
+  constructor(
+    private ingredientService: IngredientsService,
+    private foodService: FoodsService
+  ) {}
 
   ngOnInit(): void {
     this.ingredientService.getIngredients().subscribe((res: Ingredient[]) => {
@@ -50,13 +55,21 @@ export class FoodFormComponent implements OnInit {
     this.selectedFile = <File>event.target.files[0];
   }
 
+  pushFood(data) {
+    this.ingredients.push(data);
+    this.currentSearch = '';
+    this.searchResult = [];
+  }
+
   addIngredient(data) {
-    if (!this.isIngredientExist(data)) {
-      this.ingredients.push(data);
-      this.currentSearch = '';
-      this.searchResult = [];
+    if (this.ingredients.length === 0) {
+      this.pushFood(data);
     } else {
-      alert('Ingredient Already Exist...');
+      if (!this.isIngredientExist(data)) {
+        this.pushFood(data);
+      } else {
+        alert('Ingredient Already Exist...');
+      }
     }
   }
 
@@ -78,20 +91,37 @@ export class FoodFormComponent implements OnInit {
     const param = {
       name: this.name,
       imgPath: '',
-      ingredients: [],
-      procedure: '',
+      ingredients: this.ingredients,
+      procedure: this.procedure,
     };
-    console.log('add food', param);
+    const formData = new FormData();
+    formData.append('param', JSON.stringify(param));
+    formData.append('img', this.selectedFile, this.selectedFile.name);
+    this.foodService.addFoods(formData).subscribe((res) => {
+      this.foodsEventEmitter.emit('add food done...');
+    });
   }
 
   editFood() {
     const param = {
+      _id: this._id,
       name: this.name,
       imgPath: this.imgPath,
       ingredients: this.ingredients,
       procedure: this.procedure,
     };
-    console.log('edit food', param);
+
+    const formData = new FormData();
+
+    formData.append('param', JSON.stringify(param));
+
+    if (this.selectedFile) {
+      formData.append('img', this.selectedFile, this.selectedFile.name);
+    }
+
+    this.foodService.editFoods(formData).subscribe((res) => {
+      this.foodsEventEmitter.emit('edit food done...');
+    });
   }
 
   submit() {

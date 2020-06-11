@@ -2,18 +2,15 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AppEventEmitterService {
-
-  private messageSource = new Subject<any>();
+  private messageSource = new Subject<string>();
   message$ = this.messageSource.asObservable();
 
-  constructor() {
-  }
+  constructor() {}
 
-  sendMessage(m: any) {
-    this.messageSource.next(m);
+  send(data: any) {
+    this.messageSource.next(data);
   }
-
 }

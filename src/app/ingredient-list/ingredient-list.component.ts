@@ -1,48 +1,56 @@
 import { Ingredient } from './../models/ingredient.model';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  OnDestroy,
+} from '@angular/core';
 import { IngredientsService } from '../services/ingredients.service';
-import { AppEventEmitterService } from '../services/app-event-emitter.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-ingredient-list',
   templateUrl: './ingredient-list.component.html',
   styleUrls: ['./ingredient-list.component.css'],
 })
-export class IngredientListComponent implements OnInit {
+export class IngredientListComponent implements OnInit, OnDestroy {
   public ingredients: Ingredient[];
-  private ingredientService: IngredientsService;
+  subscription: Subscription;
+  public searchResult: Ingredient[];
 
-  constructor(
-    ingredientService: IngredientsService,
-    private messageService: AppEventEmitterService
-  ) {
-    this.ingredientService = ingredientService;
-    // this.ingredients = ingredientService.getIngredients();
-  }
+  @Output() public eventEmitter = new EventEmitter();
 
-  select(id: number, status: boolean) {
+  constructor(private ingredientService: IngredientsService) {}
+
+  select(id: string, status: boolean) {
     this.ingredients.map((ing) => {
-      if (ing.id == id) ing.selected = status;
+      if (ing._id == id) ing.selected = status;
       return ing;
     });
   }
 
   onSearch(event: any) {
-    this.ingredients = this.ingredientService.getIngredient(event.target.value);
+    if (event.target.value == '') {
+      this.searchResult = [];
+    } else {
+      this.searchResult = this.ingredientService.getIngredient(
+        event.target.value
+      );
+    }
   }
 
-  generate() {
-    const selectedIngredients = this.ingredients.filter(
-      (i) => i.selected === true
-    );
-    if (selectedIngredients.length === 0)
-      alert('no ingredients selected. please select ingredients');
-    else this.messageService.sendMessage(selectedIngredients);
-  }
+  generate() {}
 
   ngOnInit(): void {
     this.ingredientService.getIngredients().subscribe((data: Ingredient[]) => {
       this.ingredients = data;
     });
+  }
+
+  ngOnDestroy(): void {}
+
+  addToSelectedIngredients(ing) {
+    this.eventEmitter.emit(ing);
   }
 }

@@ -1,9 +1,15 @@
-<div class="row" style="padding-left: 20px;">
+<div class="container">
+  <div class="row" style="padding-left: 20px;">
     <div class="col-xs-1">
-        <img src="{{ingredient.imgPath}}" alt="{{ingredient.name}}" class="img-responsive"
-            style="max-height: 50px; padding-right: 10px ;">
+      <img
+        src="{{ ingredient.imgPath }}"
+        alt="{{ ingredient.name }}"
+        class="img-responsive rounded-circle"
+        style="max-height: 50px; max-width: 50px; margin-right: 10px;"
+      />
     </div>
     <div class="col-xs-1 text-dark">
-        <div>{{ingredient.name}}</div>
+      <div>{{ ingredient.name }}</div>
     </div>
+  </div>
 </div>
