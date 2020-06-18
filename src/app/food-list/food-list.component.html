@@ -1,7 +1,6 @@
-<!-- title -->
-<!-- <h4>Foods</h4> -->
-<form>
-  <div class="input-group" style="width: 50%;">
+<form class="clearfix">
+  <!-- search input -->
+  <div class="input-group float-left" style="width: 50%;">
     <div class="input-group-prepend">
       <span class="input-group-text">Search</span>
     </div>
@@ -12,11 +11,42 @@
       (input)="onSearch($event)"
     />
   </div>
+
+  <!-- dropdown -->
+  <form class="form-inline float-right">
+    <label for="sort-field">Sort By: </label>
+    <select
+      class="form-control m-2"
+      name="sort-field"
+      id="sort-field"
+      [(ngModel)]="sortField"
+    >
+      <option *ngFor="let field of sortFields" [value]="field">
+        {{ field }}
+      </option>
+    </select>
+    <label for="sort-arrange">Arrange By: </label>
+    <select
+      class="form-control m-2"
+      name="sort-direction"
+      id="sort-arrange"
+      [(ngModel)]="sortDirection"
+    >
+      <option *ngFor="let direction of sortDirections" [value]="direction">
+        {{ direction }}
+      </option>
+    </select>
+  </form>
 </form>
+
+<!-- table -->
 <div class="container-fluid">
   <div class="row">
     <div
-      *ngFor="let food of foods; let idx = index"
+      *ngFor="
+        let food of foods | sortBy: [sortField, sortDirection];
+        let idx = index
+      "
       [attr.data-index]="idx"
       class="col-sm-3"
     >

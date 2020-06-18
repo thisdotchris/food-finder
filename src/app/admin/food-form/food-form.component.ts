@@ -2,6 +2,8 @@ import { Ingredient } from './../../models/ingredient.model';
 import { IngredientsService } from './../../services/ingredients.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FoodsService } from 'src/app/services/foods.service';
+import { FoodTypeService } from 'src/app/services/food-type.service';
+import { FoodType } from 'src/app/models/food-type.model';
 
 @Component({
   selector: 'app-food-form',
@@ -15,6 +17,8 @@ export class FoodFormComponent implements OnInit {
   @Input() imgPath: string;
   @Input() ingredients: any[] = [];
   @Input() procedure: string;
+  @Input() foodType: string;
+  @Input() calories: number;
 
   @Input() fTitle: string = 'title';
   @Input() isAdding: boolean = false;
@@ -25,15 +29,20 @@ export class FoodFormComponent implements OnInit {
   private ingredientList: Ingredient[];
   public searchResult: Ingredient[];
   public currentSearch: string;
+  public foodTypes: Array<FoodType> = [];
 
   constructor(
     private ingredientService: IngredientsService,
-    private foodService: FoodsService
+    private foodService: FoodsService,
+    private foodTypeService: FoodTypeService
   ) {}
 
   ngOnInit(): void {
     this.ingredientService.getIngredients().subscribe((res: Ingredient[]) => {
       this.ingredientList = res;
+    });
+    this.foodTypeService.getFoodType().subscribe((res: FoodType[]) => {
+      this.foodTypes = res;
     });
   }
 
@@ -92,6 +101,8 @@ export class FoodFormComponent implements OnInit {
       name: this.name,
       imgPath: '',
       ingredients: this.ingredients,
+      foodType: this.foodType,
+      calories: this.calories,
       procedure: this.procedure,
     };
     const formData = new FormData();
@@ -108,6 +119,8 @@ export class FoodFormComponent implements OnInit {
       name: this.name,
       imgPath: this.imgPath,
       ingredients: this.ingredients,
+      foodType: this.foodType,
+      calories: this.calories,
       procedure: this.procedure,
     };
 

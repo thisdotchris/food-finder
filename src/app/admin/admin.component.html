@@ -45,7 +45,8 @@
 
   <!-- tables -->
   <div class="row">
-    <div class="col-md-6" style="height: 40%; overflow: scroll;">
+    <!-- Ingredient Table -->
+    <div class="col-md-4" style="overflow: auto; height: 400px;">
       <h4>Ingredient</h4>
       <table class="table table-sm table-hover">
         <thead>
@@ -143,7 +144,7 @@
     </div>
 
     <!-- Food Table -->
-    <div class="col-md-6">
+    <div class="col-md-8" style="overflow: auto; height: 400px;">
       <h4>Food</h4>
       <table class="table table-sm">
         <thead>
@@ -151,6 +152,8 @@
             <th>Image</th>
             <th>Name</th>
             <th>Ingredients</th>
+            <th>Type</th>
+            <th>Calories</th>
             <th>Procedure</th>
             <th>Action</th>
           </tr>
@@ -179,10 +182,12 @@
                 </div>
               </div>
             </td>
+            <td>{{ food.foodType.name || "" }}</td>
+            <td>{{ food.calories }}</td>
             <td>
               <div
                 style="
-                  width: 10em;
+                  width: 5em;
                   overflow: hidden;
                   white-space: nowrap;
                   text-overflow: ellipsis;
@@ -202,6 +207,8 @@
                   [imgPath]="food.imgPath"
                   [ingredients]="food.ingredients"
                   [procedure]="food.procedure"
+                  [foodType]="food.foodType._id"
+                  [calories]="food.calories"
                   (foodsEventEmitter)="getFoods()"
                 ></app-food-form>
               </div>

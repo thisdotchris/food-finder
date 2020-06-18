@@ -16,6 +16,7 @@ import { HomeComponent } from './home/home.component';
 import { IngredientFormComponent } from './admin/ingredient-form/ingredient-form.component';
 import { FoodFormComponent } from './admin/food-form/food-form.component';
 import { AppEventEmitterService } from './services/app-event-emitter.service';
+import { SortByPipe } from './pipes/sort-by.pipe';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { AppEventEmitterService } from './services/app-event-emitter.service';
     HomeComponent,
     IngredientFormComponent,
     FoodFormComponent,
+    SortByPipe,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [FoodsService, IngredientsService, AppEventEmitterService],

@@ -40,6 +40,7 @@ export class AdminComponent implements OnInit {
 
   getFoods() {
     this.foodService.getFoods().subscribe((res: Food[]) => {
+      console.log(res);
       this.foods = res;
     });
   }

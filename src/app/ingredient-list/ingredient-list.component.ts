@@ -15,9 +15,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./ingredient-list.component.css'],
 })
 export class IngredientListComponent implements OnInit, OnDestroy {
-  public ingredients: Ingredient[];
+  ingredients: Ingredient[];
   subscription: Subscription;
-  public searchResult: Ingredient[];
+  searchResult: Ingredient[];
+  currentSearch: string;
 
   @Output() public eventEmitter = new EventEmitter();
 
@@ -51,6 +52,8 @@ export class IngredientListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {}
 
   addToSelectedIngredients(ing) {
+    this.searchResult = [];
+    this.currentSearch = '';
     this.eventEmitter.emit(ing);
   }
 }

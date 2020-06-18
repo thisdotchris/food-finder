@@ -9,7 +9,7 @@ import { Food } from '../../models/food.model';
 export class FoodComponent implements OnInit {
   @Input() colapseId: string = 'testid';
   @Input() food: Food;
-
+  public cardBody: string = 'card-body';
   constructor() {}
 
   ngOnInit(): void {}

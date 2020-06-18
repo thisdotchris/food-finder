@@ -14,6 +14,10 @@ export class FoodListComponent implements OnInit, OnDestroy {
   public foods: Food[] = [];
   public selectedIngredients: Ingredient[] = [];
   subscription: Subscription;
+  sortField: string = 'name';
+  sortDirection: string = 'asc';
+  sortDirections: Array<string> = ['asc', 'dsc'];
+  sortFields: Array<string> = ['name', 'type', 'calories'];
 
   constructor(
     private foodService: FoodsService,

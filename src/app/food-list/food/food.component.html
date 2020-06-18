@@ -7,20 +7,46 @@
   />
   <div class="card-body">
     <h4 class="card-title">{{ food.name }}</h4>
-    <div [id]="'id' + colapseId" class="collapse">
-      <div>Ingredients:</div>
-      <ul *ngFor="let i of food.ingredients">
-        <li>{{ i.name }}</li>
-      </ul>
-      <div>Procedure: {{ food.procedure }}</div>
-    </div>
-    <h1></h1>
+    <hr />
+    <p>Type: {{ food.foodType.name }} Cal: {{ food.calories }}</p>
     <button
       class="btn btn-sm btn-success"
-      data-toggle="collapse"
+      data-toggle="modal"
       [attr.data-target]="'#' + 'id' + colapseId"
     >
-      See Info
+      See More...
     </button>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" [id]="'id' + colapseId">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">{{ food.name }}</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div>Ingredients:</div>
+        <ul *ngFor="let i of food.ingredients">
+          <li>{{ i.name }}</li>
+        </ul>
+        <br />
+        <div>Procedure: {{ food.procedure }}</div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
   </div>
 </div>

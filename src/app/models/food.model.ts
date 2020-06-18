@@ -4,6 +4,8 @@ export class Food {
     public name: string,
     public ingredients: string[],
     public procedure: string,
-    public imgPath: string
+    public imgPath: string,
+    public calories: number,
+    public foodType: any
   ) {}
 }
