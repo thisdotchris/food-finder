@@ -5,6 +5,11 @@
       <app-ingredient-list
         (eventEmitter)="selectIngredient($event)"
       ></app-ingredient-list>
+      <hr />
+      <button class="btn btn-warning" (click)="generateFood()">
+        Generate Food
+      </button>
+      <br />
       <div class="row">
         <div
           class="col-sm-4"
@@ -29,10 +34,6 @@
           </div>
         </div>
       </div>
-      <hr />
-      <button class="btn btn-warning" (click)="generateFood()">
-        Generate Food
-      </button>
     </div>
     <div class="col-md-9">
       <app-food-list></app-food-list>

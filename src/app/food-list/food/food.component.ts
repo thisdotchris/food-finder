@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Food } from '../../models/food.model';
-
 @Component({
   selector: 'app-food',
   templateUrl: './food.component.html',
@@ -11,6 +10,10 @@ export class FoodComponent implements OnInit {
   @Input() food: Food;
   public cardBody: string = 'card-body';
   constructor() {}
+
+  upperCase(str: string) {
+    return str.toUpperCase();
+  }
 
   ngOnInit(): void {}
 }

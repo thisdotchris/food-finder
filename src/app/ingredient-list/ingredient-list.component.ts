@@ -33,7 +33,8 @@ export class IngredientListComponent implements OnInit, OnDestroy {
 
   onSearch(event: any) {
     if (event.target.value == '') {
-      this.searchResult = [];
+      // this.searchResult = [];
+      this.searchResult = this.ingredients;
     } else {
       this.searchResult = this.ingredientService.getIngredient(
         event.target.value
@@ -46,6 +47,7 @@ export class IngredientListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.ingredientService.getIngredients().subscribe((data: Ingredient[]) => {
       this.ingredients = data;
+      this.searchResult = data;
     });
   }
 

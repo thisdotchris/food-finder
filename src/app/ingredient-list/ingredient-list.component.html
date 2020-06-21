@@ -15,7 +15,7 @@
   </div>
 </form>
 
-<div>
+<div style="height: 350px; overflow: auto;">
   <div *ngFor="let ingredient of searchResult">
     <div class="hv" (click)="addToSelectedIngredients(ingredient)">
       <app-ingredient [ingredient]="ingredient"></app-ingredient>

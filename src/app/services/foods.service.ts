@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Food } from '../models/food.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FoodsService {
-  private apiUrl = 'http://localhost:3000/v1';
+  private apiUrl = environment.apiURL;
   public foods: Food[];
 
   private httpGetFoods() {

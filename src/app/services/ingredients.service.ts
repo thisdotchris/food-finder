@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Ingredient } from '../models/ingredient.model';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class IngredientsService {
-  private apiUrl = 'http://localhost:3000/v1';
+  private apiUrl = environment.apiURL;
   public ingredients: Ingredient[];
 
   private httpGetIngredients() {

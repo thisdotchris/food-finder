@@ -44,7 +44,14 @@ export class IngredientFormComponent implements OnInit {
 
     this.ingredientsService.addIngredients(formdata).subscribe((res) => {
       this.ingredientEventEmitter.emit('done adding...');
+      this.resetForm();
     });
+  }
+
+  resetForm() {
+    this._id = '';
+    this.name = '';
+    this.imgPath = '';
   }
 
   editIngredient() {
@@ -63,6 +70,7 @@ export class IngredientFormComponent implements OnInit {
 
     this.ingredientsService.updateIngredients(formdata).subscribe((res) => {
       this.ingredientEventEmitter.emit('done editing...');
+      this.resetForm();
     });
   }
 

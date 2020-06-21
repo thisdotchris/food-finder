@@ -96,6 +96,15 @@ export class FoodFormComponent implements OnInit {
     else return true;
   }
 
+  resetForm() {
+    this.name = '';
+    this.imgPath = '';
+    this.ingredientList = [];
+    this.foodType = '';
+    this.calories = 0;
+    this.procedure = '';
+  }
+
   addFood() {
     const param = {
       name: this.name,
@@ -110,6 +119,7 @@ export class FoodFormComponent implements OnInit {
     formData.append('img', this.selectedFile, this.selectedFile.name);
     this.foodService.addFoods(formData).subscribe((res) => {
       this.foodsEventEmitter.emit('add food done...');
+      this.resetForm();
     });
   }
 
@@ -134,6 +144,7 @@ export class FoodFormComponent implements OnInit {
 
     this.foodService.editFoods(formData).subscribe((res) => {
       this.foodsEventEmitter.emit('edit food done...');
+      this.resetForm();
     });
   }
 

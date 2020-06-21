@@ -5,8 +5,8 @@
     alt="Card image"
     style="width: 100%;"
   />
-  <div class="card-body">
-    <h4 class="card-title">{{ food.name }}</h4>
+  <div class="card-body" style="height: 200px;">
+    <h6 class="card-title">{{ upperCase(food.name) }}</h6>
     <hr />
     <p>Type: {{ food.foodType.name }} Cal: {{ food.calories }}</p>
     <button
@@ -34,9 +34,21 @@
       <!-- Modal body -->
       <div class="modal-body">
         <div>Ingredients:</div>
-        <ul *ngFor="let i of food.ingredients">
-          <li>{{ i.name }}</li>
-        </ul>
+        <div *ngFor="let i of food.ingredients">
+          <div class="row" style="padding-left: 20px;">
+            <div class="col-xs-1">
+              <img
+                src="{{ i.imgPath }}"
+                alt="{{ i.name }}"
+                class="img-responsive rounded-circle"
+                style="height: 25px; width: 25px; margin-right: 25px;"
+              />
+            </div>
+            <div class="col-xs-1 text-dark">
+              <div>{{ i.name }}</div>
+            </div>
+          </div>
+        </div>
         <br />
         <div>Procedure: {{ food.procedure }}</div>
       </div>
